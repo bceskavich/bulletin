@@ -9,7 +9,6 @@ def login_values(KEY, REDIRECT):
 
 def authenticate(KEY, TOKEN):
 	user_credentials = Pocket.get_credentials(consumer_key=KEY, code=TOKEN)
-	# user_name = user_credentials['user_name']
 	access_token = user_credentials['access_token']
 
 	auth_values = [user_credentials, access_token]
