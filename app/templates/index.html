@@ -1,16 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Welcome to Bulletin</h1>
-<p>Bulletin is a webapp to enhance your <a href="http://getpocket.com/" target="_blank">Pocket</a> experience. Use Bulletin to pull related and balanced content from across the web to enhance any of your saved articles.</p>
-<p>Pocket is currently under development by <a href="http://www.ceskavich.com/" target="_blank">Billy Ceskavich</a>. Check back for more soon. For now, <a href="https://www.github.com/bceskavich/bulletin" target="_blank">view the source code here!</a></p>
+<div class="row">
+	<div class="col-md-12">
+		<h1>Welcome to Bulletin</h1>
+		<p>Bulletin is a webapp to enhance your <a href="http://getpocket.com/" target="_blank">Pocket</a> experience. Use Bulletin to pull related and balanced content from across the web to enhance any of your saved articles.</p>
+		<p>Pocket is currently under development by <a href="http://www.ceskavich.com/" target="_blank">Billy Ceskavich</a>. Check back for more soon. For now, <a href="https://www.github.com/bceskavich/bulletin" target="_blank">view the source code here!</a></p>
+	</div>
+</div>
 
 <hr>
 
 {% if content %}
-	{% for item in content %}
-	<p><strong>Title:</strong> <a href="{{content[item]['resolved_url']}}">{{content[item]['resolved_title']}}</a></p>
-	<p>{{content[item]['excerpt']}}</p>
+	{% for story in content %}
+	<p><strong>Title:</strong> <a href="{{story.url}}">{{story.title}}</a></p>
+	<p>{{story.excerpt}}</p>
 	{% endfor %}
 {% endif %}
 {% endblock %}

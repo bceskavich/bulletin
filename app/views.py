@@ -2,15 +2,20 @@ from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, login_manager
 from forms import LoginForm
-from models import User, ROLE_USER, ROLE_ADMIN
+from models import User, Story, ROLE_USER, ROLE_ADMIN
 from config import CONSUMER_KEY
 from pocket import Pocket
+from datetime import datetime, timedelta
 import json
 import requests
 
 @app.before_request
 def before_request():
 	g.user = current_user
+	if g.user.is_authenticated():
+		g.user.last_seen = datetime.utcnow()
+		db.session.add(g.user)
+		db.session.commit()
 
 @login_manager.user_loader
 def load_user(id):
@@ -20,16 +25,17 @@ def load_user(id):
 @app.route('/index', methods = ['GET', 'POST'])
 def index():
 	content = {}
-	if g.user.is_authenticated():
-		params = {
-			'consumer_key': CONSUMER_KEY,
-			'access_token': g.user.token,
-			'since':'1391212800'
-		}
-		headers = {'content-type':'application/json'}
-		resp = requests.post('https://getpocket.com/v3/get', data=json.dumps(params), headers=headers)
-		raw = json.loads(resp.content)
-		content = raw['list']
+	if g.user is not None and g.user.is_authenticated():
+		# Only loads content via the Python API if user hasn't logged
+		# in within over a day.
+		# WIP! -- Need to add user control of story load and redundancy
+		# check in DB.
+		gap = datetime.utcnow() - timedelta(days=1)
+		if gap > g.user.last_seen:
+			content = g.user.load_stories(CONSUMER_KEY)
+			for item in content:
+				g.user.save_story(content[item])
+		content = Story.query.filter_by(user_id = g.user.id).all()
 	return render_template('index.html',
 		content = content)
 

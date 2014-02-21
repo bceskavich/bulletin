@@ -2,6 +2,7 @@
 	<head>
 		<!--Bootstrap-->
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../static/css/style.css">
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
 		{% if title %}
@@ -11,7 +12,7 @@
 		{% endif %}
 	</head>
 	<body>
-		<nav class="navbar navbar-inverse" role="navigation">
+		<nav class="navbar navbar-bulletin" role="navigation">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="{{url_for('index')}}">Bulletin</a>
 			</div>
@@ -24,7 +25,7 @@
 					{% endif %}
 				</ul>
 				{% if g.user.is_authenticated() %}
-				<p class="navbar-text navbar-right">Signed in as {{g.user.username}}</p>
+				<p class="navbar-text navbar-right">Signed in as <a href="https://getpocket.com/a/queue/" target="_blank">{{g.user.username}}</a></p>
 				{% endif %}
 			</div>
 		</nav>
