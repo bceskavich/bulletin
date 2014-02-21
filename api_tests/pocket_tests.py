@@ -21,6 +21,8 @@ def pocket_query(url, params):
 	r = requests.post(url, data=json.dumps(params), headers=headers)
 	encoded = json.loads(r.content)
 
+	print json.dumps(encoded, indent=1)
+
 	results = encoded['list'].values()
 	return results
 
@@ -50,8 +52,8 @@ def load_from_DB(dbname):
 if __name__ == '__main__':
 	dbname = raw_input("Please enter database name: ")
 
-	# results = pocket_query(url, params)
-	# print results
+	results = pocket_query(url, params)
+	# json.dumps(results)
 	# save_to_DB(dbname, results)
 
 	saved_data = load_from_DB(dbname)
