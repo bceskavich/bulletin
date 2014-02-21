@@ -26,10 +26,20 @@ class User(db.Model):
 		content = raw['list']
 		return content
 
+	"""
+	def is_unique_story(self, story):
+		saved = self.stories.all()
+		while True:
+			for item in saved:
+				if item.pocket_id == story.pocket_id:
+					return False
+	"""
+
 	def save_story(self, item):
 		story = Story(
 			user_id = self.id,
-			title = item['resolved_title'],
+			pocket_id = item['item_id'],
+			title = item['given_title'],
 			url = item['resolved_url'],
 			excerpt = item['excerpt'],
 			wordcount = item['word_count'],
@@ -55,9 +65,9 @@ class User(db.Model):
 		return '<User %r>' % (self.username)
 
 class Story(db.Model):
-	# WARNING -- Multiple examples of the same story could appear across accounts
-	# Search via ID is recommended for now
 	id = db.Column(db.Integer, primary_key = True)
+	# Uses Pocket's given ID for a saved story to confirm uniqueness
+	pocket_id = db.Column(db.Integer, index = True, unique = True)
 	title = db.Column(db.String(256), index = True) # should point to 'resolved_title'
 	url = db.Column(db.String(256), index = True) # should point to 'resolved_url'
 	excerpt = db.Column(db.Text)

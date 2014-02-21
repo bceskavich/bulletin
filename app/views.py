@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, login_manager
-from forms import LoginForm
+from forms import LoginForm, LoadForm
 from models import User, Story, ROLE_USER, ROLE_ADMIN
 from config import CONSUMER_KEY
 from pocket import Pocket
@@ -24,20 +24,18 @@ def load_user(id):
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/index', methods = ['GET', 'POST'])
 def index():
+	form = LoadForm()
 	content = {}
 	if g.user is not None and g.user.is_authenticated():
-		# Only loads content via the Python API if user hasn't logged
-		# in within over a day.
-		# WIP! -- Need to add user control of story load and redundancy
-		# check in DB.
-		gap = datetime.utcnow() - timedelta(days=1)
-		if gap > g.user.last_seen:
+		if form.validate_on_submit():
 			content = g.user.load_stories(CONSUMER_KEY)
 			for item in content:
 				g.user.save_story(content[item])
+			return redirect(url_for('index'))
 		content = Story.query.filter_by(user_id = g.user.id).all()
 	return render_template('index.html',
-		content = content)
+		content = content,
+		form = form)
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():

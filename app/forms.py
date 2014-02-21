@@ -4,3 +4,6 @@ from wtforms.validators import Required
 
 class LoginForm(Form):
 	remember_me = BooleanField('remember_me', default = False)
+
+class LoadForm(Form):
+	pass

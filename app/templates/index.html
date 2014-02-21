@@ -11,10 +11,25 @@
 
 <hr>
 
+{% if g.user.is_authenticated() %}
+<div class="row">
+	<div class="col-md-12">
+		<form action="" method="post" name="load">
+			{{form.hidden_tag()}}
+			<input type="submit" value="Load Content From Pocket">
+		</form>
+	</div>
+</div>
+{% endif %}
+
 {% if content %}
+	<div class="row">
 	{% for story in content %}
-	<p><strong>Title:</strong> <a href="{{story.url}}">{{story.title}}</a></p>
-	<p>{{story.excerpt}}</p>
+		<div class="col-md-6">
+			<p><strong>Title:</strong> <a href="{{story.url}}">{{story.title}}</a></p>
+			<p>{{story.excerpt}}</p>
+		</div>
 	{% endfor %}
+	</div>
 {% endif %}
 {% endblock %}
