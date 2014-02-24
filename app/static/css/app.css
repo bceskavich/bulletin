@@ -1,0 +1,23 @@
+.image-header {
+	background-image:url('../img/pocket_placeholder.png');
+	background-size: cover;
+	background-position: center;
+	height:500px;
+	max-width: none;
+	line-height: 500px;
+}
+
+.image-header a.button {
+	background-color: #6982c2;
+	opacity: .9;
+	border: 3px solid #42568b;
+	font-family: 'Biko Regular', Avenir, sans-serif;
+	font-size: 30px;
+	border-radius: 10px;
+	margin: 0px auto;
+}
+
+.image-header a.button:hover {
+	background-color: #42568b;
+	text-decoration: none;
+}

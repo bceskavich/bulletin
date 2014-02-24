@@ -13,41 +13,49 @@ class User(db.Model):
 	last_seen = db.Column(db.DateTime)
 	stories = db.relationship('Story', backref='user', lazy = 'dynamic')
 
-	def load_stories(self, key, headers={'content-type':'application/json'}):
+	def load_stories(self, key):
 		# Requests params
 		params = {
 			'consumer_key': key,
 			'access_token': self.token,
-			'since': '1391212800'
+			'since': '1393172035'
 		}
+		headers={'content-type':'application/json'}
 		# Initial request & raw data response
 		resp = requests.post('https://getpocket.com/v3/get', data=json.dumps(params), headers=headers)
 		raw = json.loads(resp.content)
 		content = raw['list']
 		return content
 
-	"""
 	def is_unique_story(self, story):
-		saved = self.stories.all()
-		while True:
-			for item in saved:
-				if item.pocket_id == story.pocket_id:
-					return False
-	"""
+		saved = Story.query.filter_by(user_id = self.id, pocket_id = int(story['item_id']))
+		if len(saved.all()) > 0:
+			return False
+		else:
+			return True
 
 	def save_story(self, item):
-		story = Story(
-			user_id = self.id,
-			pocket_id = item['item_id'],
-			title = item['given_title'],
-			url = item['resolved_url'],
-			excerpt = item['excerpt'],
-			wordcount = item['word_count'],
-			added = item['time_added'],
-			status = item['status'],
-			favorite = item['favorite'])
-		db.session.add(story)
-		db.session.commit()
+		# Stories marked w/ status 2 are faulty and should be deleted
+		# and are thus not saved
+		if item['status'] != '2':
+			# Pulls a proper title
+			if item['resolved_title'] is None:
+				title = item['given_title']
+			else:
+				title = item['resolved_title']
+			# Saves story w/ proper content from Pocket request
+			story = Story(
+				user_id = self.id,
+				pocket_id = item['item_id'],
+				title = title,
+				url = item['resolved_url'],
+				excerpt = item['excerpt'],
+				wordcount = item['word_count'],
+				added = item['time_added'],
+				status = item['status'],
+				favorite = item['favorite'])
+			db.session.add(story)
+			db.session.commit()
 
 	def is_authenticated(self):
 		return True

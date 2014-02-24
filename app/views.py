@@ -28,9 +28,13 @@ def index():
 	content = {}
 	if g.user is not None and g.user.is_authenticated():
 		if form.validate_on_submit():
+			# Queries the Pocket API for user's conent
 			content = g.user.load_stories(CONSUMER_KEY)
 			for item in content:
-				g.user.save_story(content[item])
+				# Checks if a story is already saved in our DB,
+				# only saves if not previously saved
+				if g.user.is_unique_story(content[item]):
+					g.user.save_story(content[item])
 			return redirect(url_for('index'))
 		content = Story.query.filter_by(user_id = g.user.id).all()
 	return render_template('index.html',
