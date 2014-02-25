@@ -34,3 +34,13 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# Local DB
+*.db
+db_repository
+
+# Other
+tmp
+
+# Virtual Env
+env

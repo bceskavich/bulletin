@@ -8,16 +8,15 @@
 }
 
 .image-header a.button {
-	background-color: #6982c2;
+	background-color: #c48779;
 	opacity: .9;
-	border: 3px solid #42568b;
+	border: 3px solid #a05d5d;
 	font-family: 'Biko Regular', Avenir, sans-serif;
 	font-size: 30px;
 	border-radius: 10px;
-	margin: 0px auto;
 }
 
 .image-header a.button:hover {
-	background-color: #42568b;
+	background-color: #a05d5d;
 	text-decoration: none;
 }
