@@ -17,7 +17,6 @@ params = {
 	'since':'1391212800'}
 headers = {'content-type': 'application/json'}
 
-"""
 def pocket_query(url, params):
 	r = requests.post(url, data=json.dumps(params), headers=headers)
 	encoded = json.loads(r.content)
@@ -68,16 +67,3 @@ if __name__ == '__main__':
 		print "EXCERPT:", record['excerpt']
 		print
 		print "----"
-"""
-
-def pocket_query_test_type(url, params):
-	r = requests.post(url, data=json.dumps(params), headers=headers)
-	encoded = json.loads(r.content)
-
-	return encoded
-
-if __name__ == '__main__':
-	results = pocket_query_test_type(url, params)
-
-	for i in results['list']:
-		print type(i)

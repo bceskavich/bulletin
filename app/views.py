@@ -41,6 +41,15 @@ def index():
 		content = content,
 		form = form)
 
+@app.route('/story/<id>')
+def story(id):
+	story = Story.query.get(int(id))
+	if story == None:
+		flash('This story was not found!')
+		return redirect(url_for('index'))
+	return render_template('story.html',
+		story = story)
+
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
 	# If user is already logged in, simply redirect to index

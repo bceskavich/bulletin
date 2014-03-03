@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if story %}
+	<div class="row">
+		<div class="col-md-6">
+			<p><strong>Title:</strong> <a href="{{story.url}}">{{story.title}}</a></p>
+			<p><strong>Source:</strong> {{story.url}}</p>		
+			<p>{{story.excerpt}}</p>
+		</div>
+		<div class="col-md-6">
+			<h3>Meta Data</h3>
+			<p><strong>Pocket Ref ID:</strong> {{story.pocket_id}}</p>
+			<p><strong>Wordcount:</strong> {{story.wordcount}}</p>
+			<p><strong>Tags:</strong> {{story.tags}}</p>
+		</div>
+	</div>
+{% endif %}
+{% endblock %}

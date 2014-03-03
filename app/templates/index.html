@@ -31,6 +31,7 @@
 		<div class="col-md-6">
 			<p><strong>Title:</strong> <a href="{{story.url}}">{{story.title}}</a></p>
 			<p>{{story.excerpt}}</p>
+			<p><a href="{{url_for('story', id = story.id)}}">See more!</a></p>
 		</div>
 	{% endfor %}
 	</div>
