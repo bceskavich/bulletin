@@ -41,6 +41,8 @@ db_repository
 
 # Other
 tmp
+config.py
+app.db
 
 # Virtual Env
 env
