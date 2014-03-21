@@ -1,10 +1,10 @@
 import sys
-import couchdb
+#import couchdb
 import json
 import pocket
 import requests
 
-server = couchdb.Server('http://localhost:5984')
+#server = couchdb.Server('http://localhost:5984')
 
 username = 'ceskavich'
 access_token = 'f2f6b3ea-4f72-d71d-bdaf-43ad9f'
@@ -51,12 +51,13 @@ def load_from_DB(dbname):
 	return results
 
 if __name__ == '__main__':
-	dbname = raw_input("Please enter database name: ")
+	#dbname = raw_input("Please enter database name: ")
 
 	results = pocket_query(url, params)
-	# json.dumps(results)
+	json.dumps(results)
 	# save_to_DB(dbname, results)
 
+	"""
 	saved_data = load_from_DB(dbname)
 	for record in saved_data:
 		print "----"
@@ -67,3 +68,4 @@ if __name__ == '__main__':
 		print "EXCERPT:", record['excerpt']
 		print
 		print "----"
+	"""
