@@ -81,11 +81,12 @@ def topChannel(channels):
 
     return top_channel
 
-def searchTimesTags(key, search_items):
-    params = {'query':'2016 Presidential Election', 'api-key':key}
+def searchTimesTags(key, query):
+    params = {'query':query, 'api-key':key}
     url = 'http://api.nytimes.com/svc/suggest/v1/timestags'
     resp = requests.get(url, params=params)
     encoded = json.loads(resp.content)
+
     print json.dumps(encoded[1], indent=1)
 
 # NEED START DATE FROM ORIGINAL POCKET ARTICLE
@@ -99,8 +100,8 @@ def searchTimes(key, query):
 
     return encoded
 
-def searchTimesSemantic(key):
-    params = {'query':'US Defense', 'fields':'all', 'api-key':key}
+def searchTimesSemantic(key, query):
+    params = {'query':query, 'fields':'all', 'api-key':key}
     url = 'http://api.nytimes.com/svc/semantic/v2/concept/name/nytd_des/United States Defense and Military Forces.json'
     #url = 'http://api.nytimes.com/svc/semantic/v2/concept/search.json'
     resp = requests.get(url, params=params)
@@ -115,20 +116,25 @@ if __name__ == '__main__':
     channels = troveChannelSearch(developer_key, url)
     common_channels = troveQuery(developer_key, channels, channel_search=True)
 
+    print json.dumps(common_channels, indent=1)
+
     # Requeries based on top channels
     top = topChannel(common_channels)
     print json.dumps(top, indent=1)
 
+    """
     related_stories = troveQuery(developer_key, top, story_search=True)
     print str(len(related_stories)) + ' stories found related to top three tags!'
     print json.dumps(related_stories, indent=1)
+    """
 
     article_search_key = 'b2f1032fbec2cb261c1e153ab6b5a6b8:13:69075429'
     semantic_api_key = 'f00917b36620aa064bf66847bfbd4661:7:69075429'
     tags_search_key = 'e696e34ed4c186684a5466a878cd9682:14:69075429'
 
-    #searchTimesTags(tags_search_key, top)
+    #searchTimesTags(tags_search_key, top.values()[0]['name'])
     nytimes = searchTimes(article_search_key, query=top.values()[0]['name'])
-    #searchTimesSemantic(semantic_api_key)
+    #searchTimesSemantic(semantic_api_key, query=top.values()[0]['name'])
 
     print len(nytimes['response']['docs'])
+    print json.dumps(nytimes['response']['docs'], indent=1)

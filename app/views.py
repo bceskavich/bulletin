@@ -3,7 +3,7 @@ from flask.ext.login import login_user, logout_user, current_user, login_require
 from app import app, db, login_manager
 from forms import LoginForm, LoadForm
 from models import User, Story, ROLE_USER, ROLE_ADMIN
-from config import CONSUMER_KEY
+from config import CONSUMER_KEY, TROVE_KEY, NYTIMES_SEARCH_KEY
 from pocket import Pocket
 from datetime import datetime, timedelta
 import json
@@ -33,7 +33,7 @@ def index():
 			for item in content:
 				# Checks if a story is already saved in our DB,
 				# only saves if not previously saved
-				if g.user.is_unique_story(content[item]):
+				if g.user.is_unique_story(content[item]) and g.user.has_trove_presence(TROVE_KEY, content[item]):
 					g.user.save_story(content[item])
 			return redirect(url_for('index'))
 		content = Story.query.filter_by(user_id = g.user.id).all()
@@ -44,11 +44,23 @@ def index():
 @app.route('/story/<id>')
 def story(id):
 	story = Story.query.get(int(id))
+	date_saved = datetime.fromtimestamp(story.added)
+	channels = g.user.troveChannelSearch(TROVE_KEY, story.url)
+	common_channels = g.user.troveQuery(TROVE_KEY, channels, channel_search=True)
+	top_channels = g.user.topChannels(common_channels)
+	related_trove_stories = g.user.troveQuery(TROVE_KEY, top_channels, story_search=True)
+	common_tags = g.user.searchTimesArticles(NYTIMES_SEARCH_KEY, top_channels, tag_search=True)
+	related_times_stories = g.user.searchTimesArticles(NYTIMES_SEARCH_KEY, top_channels, story_search=True)
+	all_tags = g.user.combineTopTags(common_channels, common_tags)
+	related_stories = g.user.combineRelatedStories(related_trove_stories, related_times_stories)
 	if story == None:
 		flash('This story was not found!')
 		return redirect(url_for('index'))
 	return render_template('story.html',
-		story = story)
+		story = story,
+		date_saved = date_saved,
+		topics = all_tags,
+		related_stories = related_stories)
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
