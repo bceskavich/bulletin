@@ -20,7 +20,7 @@ else:
     # Database path
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     # CSRF Key
-    SECRET_KEY = os.envirn['CSRF_SECRET_KEY']
+    SECRET_KEY = os.environ['CSRF_SECRET_KEY']
     # Pocket API
     CONSUMER_KEY = os.environ['POCKET_KEY']
     # News API Credentials
