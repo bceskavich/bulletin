@@ -49,8 +49,8 @@ def story(id):
 	common_channels = g.user.troveQuery(TROVE_KEY, channels, channel_search=True)
 	top_channels = g.user.topChannels(common_channels)
 	related_trove_stories = g.user.troveQuery(TROVE_KEY, top_channels, story_search=True)
-	common_tags = g.user.searchTimesArticles(NYTIMES_SEARCH_KEY, top_channels, tag_search=True)
-	related_times_stories = g.user.searchTimesArticles(NYTIMES_SEARCH_KEY, top_channels, story_search=True)
+	common_tags = g.user.searchTimesArticles(NYTIMES_SEARCH_KEY, top_channels, date_saved, tag_search=True)
+	related_times_stories = g.user.searchTimesArticles(NYTIMES_SEARCH_KEY, top_channels, date_saved, story_search=True)
 	all_tags = g.user.combineTopTags(common_channels, common_tags)
 	related_stories = g.user.combineRelatedStories(related_trove_stories, related_times_stories)
 	if story == None:

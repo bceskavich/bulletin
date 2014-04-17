@@ -36,14 +36,14 @@ class User(db.Model):
 
 	def has_trove_presence(self, key, story):
 		if story['status'] != '2':
-			story_url = story['resolved_url']
+			story_url = story['given_url']
 			trove_url = 'http://api.washingtonpost.com/trove/v1/items'
 			params = {'url':story_url, 'key':key}
 
 			response = requests.get(trove_url, params=params)
 			encoded = json.loads(response.content)
 
-			if len(encoded['items']) > 0:
+			if len(encoded['items']) > 0 and 'relatedChannels' in encoded['items'][0].keys():
 				return True
 			else:
 				return False
@@ -62,7 +62,7 @@ class User(db.Model):
 				user_id = self.id,
 				pocket_id = item['item_id'],
 				title = title,
-				url = item['resolved_url'],
+				url = item['given_url'],
 				excerpt = item['excerpt'],
 				wordcount = item['word_count'],
 				added = item['time_added'],
@@ -156,7 +156,7 @@ class User(db.Model):
 	    return top_channels
 
 	# NEEDS START DATE FROM POCKET STORY
-	def searchTimesArticles(self, key, channels, story_search=False, tag_search=False):
+	def searchTimesArticles(self, key, channels, date, story_search=False, tag_search=False, ):
 	    related_stories = [] # For final related stories
 	    common_tags = {} # For common channels across queries
 
@@ -166,7 +166,7 @@ class User(db.Model):
 
 	    for q in queries:
 	        # Makes a request and loads in actual information
-	        params = {'q':q, 'api-key':key}
+	        params = {'q':q, 'begin_date':date.strftime('%Y%m%d'), 'api-key':key}
 	        response = requests.get(url, params=params)
 	        encoded = json.loads(response.content)
 	        items = encoded['response']['docs']
