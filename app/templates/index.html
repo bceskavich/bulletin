@@ -1,43 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
 
-<section id="index">
+<section role="main" id="index">
 	<div class="row">
-		<div class="large-3 med-3 small-3 columns">
-			&nbsp;
-		</div>
-		<div class="large-6 med-6 small-6 columns" id="index-link">
+		<div class="large-6 med-6 small-6 small-centered columns" id="index-link">
 			<form action="" method="post" name="login">
 				{{form.hidden_tag()}}
 				<input type="submit" value="Sign in with Pocket">
 			</form>
 		</div>
-		<div class="large-3 med-3 small-3 columns">
-			&nbsp;
-		</div>
 	</div>
 
 	<div class="row">
-		<div class="large-4 med-4 small-4 columns">
-			&nbsp;
-		</div>
-		<div class="large-4 med-4 small-4 columns">
+		<div class="small-4 small-centered columns">
 			<hr />
 		</div>
-		<div class="large-4 med-4 small-4 columns">
-			&nbsp;
-		</div>
 	</div>
 
 	<div class="row">
-		<div class="large-3 med-3 small-3 columns">
-			&nbsp;
-		</div>
-		<div class="large-6 med-6 small-6 columns" id="index-link">
+		<div class="small-6 small-centered columns" id="index-link">
 			<a href="{{url_for('home')}}">What is Bulletin?</a>
-		</div>
-		<div class="large-3 med-3 small-3 columns">
-			&nbsp;
 		</div>
 	</div>
 </section>

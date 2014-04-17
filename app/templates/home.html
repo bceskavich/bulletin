@@ -1,39 +1,41 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="row image-header">
-	<a href="{{url_for('login')}}" class="button">Sign in with Pocket</a>
-</div>
-<div class="row">
-	<div class="col-md-12">
-		<h1>Welcome to Bulletin</h1>
-		<p>Bulletin is a webapp to enhance your <a href="http://getpocket.com/" target="_blank">Pocket</a> experience. Use Bulletin to pull related and balanced content from across the web to enhance any of your saved articles.</p>
-		<p>Pocket is currently under development by <a href="http://www.ceskavich.com/" target="_blank">Billy Ceskavich</a>. Check back for more soon. For now, <a href="https://www.github.com/bceskavich/bulletin" target="_blank">view the source code here!</a></p>
+<section role="main" id="home">
+	<div class="row">
+		<div class="large-6 med-6 small-6 columns">
+			<h1>Welcome to Bulletin</h1>
+			<p>Bulletin is a webapp to enhance your <a href="http://getpocket.com/" target="_blank">Pocket</a> experience. Use Bulletin to pull related and balanced content from across the web to enhance any of your saved articles.</p>
+			<p>Pocket is currently under development by <a href="http://www.ceskavich.com/" target="_blank">Billy Ceskavich</a>. Check back for more soon. For now, <a href="https://www.github.com/bceskavich/bulletin" target="_blank">view the source code here!</a></p>
+		</div>
+		<div class="large-6 med-6 small-6 columns">
+			<form action="" method="post" name="load">
+				{{form.hidden_tag()}}
+				<input type="submit" value="Load Stories from Pocket">
+			</form>
+		</div>
 	</div>
-</div>
 
-<hr>
-
-{% if g.user.is_authenticated() %}
-<div class="row">
-	<div class="col-md-12">
-		<form action="" method="post" name="load">
-			{{form.hidden_tag()}}
-			<input type="submit" value="Load Content From Pocket">
-		</form>
+	<div class="row">
+		<hr />
 	</div>
-</div>
-{% endif %}
 
-{% if content %}
+	{% if content %}
 	<div class="row">
 	{% for story in content %}
-		<div class="col-md-6">
-			<p><strong>Title:</strong> <a href="{{story.url}}">{{story.title}}</a></p>
-			<p>{{story.excerpt}}</p>
-			<p><a href="{{url_for('story', id = story.id)}}">See more!</a></p>
-		</div>
+		<a href="{{url_for('story', id=story.id)}}">
+			<article class="small-12 columns home-article">
+				<div class="story-top">
+					<h4>{{story.title}}</h4>
+					<p>Click to get context...</p>
+				</div>
+				<h4>{{story.title}}</h4>
+				<p>{{story.excerpt}}</p>
+			</article>
+		</a>
 	{% endfor %}
 	</div>
-{% endif %}
+	{% endif %}
+</section>
+
 {% endblock %}

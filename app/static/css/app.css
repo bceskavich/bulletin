@@ -37,8 +37,12 @@ Header Navigation
 	color: #fff;
 }
 
+.contain-to-grid {
+	border-bottom: 1px solid #ddd;
+}
+
 /* ###########################
-Welcome (Index) Page
+Index / Login Page
 ########################### */
 
 #index #index-link {
@@ -69,6 +73,75 @@ Welcome (Index) Page
 	margin-top: 210px;
 }
 
+/* ###########################
+Authenticated Home Page
+########################### */
+
+#home > div:first-child {
+	height: 400px;
+}
+
+#home h1 {
+	padding-top: 90px;
+}
+
+#home input[type="submit"] {
+	display: block;
+	font-family: 'Arvo';
+	color: #fff;
+	font-weight: 700;
+	font-size: 25px;
+	background-color: #333;
+	border: none;
+	margin: 0px auto;
+	padding: 10px 15px;
+	border-radius: 5px;
+	margin-top: 180px;
+}
+
+#home input[type="submit"]:hover {
+	background-color: #005b8d;
+}
+
+#home .home-article {
+	background-color: #f9f9f9;
+	border-radius: 5px;
+	padding: 20px 20px;
+	margin: 20px 0px;
+	color: #333;
+}
+
+#home .home-article h4 {
+	color: #005b8d;
+}
+
+#home .story-top {
+	position: absolute;
+	background-color: #005b8d;
+	opacity: .9;
+	height: 100%;
+	width: 100%;
+	display: none;
+	border-radius: 5px;
+	margin-top: -20px;
+	margin-left: -20px;
+	color: #fff;
+	padding: 20px 20px;
+}
+
+#home .story-top h4 {
+	color: #fff;
+}
+
+#home .story-top p {
+	font-size: 20px;
+}
+
+#home .home-article:hover .story-top {
+	display: block;
+}
+
+/*
 .image-header {
 	background-image:url('../img/pocket_placeholder.png');
 	background-size: cover;
@@ -91,3 +164,4 @@ Welcome (Index) Page
 	background-color: #a05d5d;
 	text-decoration: none;
 }
+*/

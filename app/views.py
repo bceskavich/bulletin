@@ -83,10 +83,10 @@ def login():
 		form = LoginForm()
 		if form.validate_on_submit():
 			# Grabs request token from Pocket and stores in session for later authentication
-			request_token = Pocket.get_request_token(consumer_key=CONSUMER_KEY, redirect_uri="http://localhost:5000/login")
+			request_token = Pocket.get_request_token(consumer_key=CONSUMER_KEY, redirect_uri='http://localhost:5000/auth')
 			session['request_token'] = request_token
 			# Grabs auth url from Pocket to redirect user to
-			auth_url = Pocket.get_auth_url(code=request_token, redirect_uri=url_for('auth'))
+			auth_url = Pocket.get_auth_url(code=request_token, redirect_uri='http://localhost:5000/auth')
 			return redirect(auth_url)
 	return render_template('index.html',
 		form = form)
