@@ -1,5 +1,72 @@
+/* ###########################
+Universal Styling
+########################### */
+
 h1, h2, h3, h4, h5, h6 {
 	font-family: 'Arvo';
+}
+
+/* ###########################
+Header Navigation
+########################### */
+
+.nav-links {
+	font-family: 'Arvo';
+}
+
+.nav-links ul {
+	float: right;
+}
+
+.nav-links ul li {
+	display: inline;
+	line-height: 75px;
+	background-color: #333;
+	border-radius: 5px;
+	font-size: 20px;
+	padding: 10px 15px;
+	margin: 0px 10px;
+}
+
+.nav-links ul li:hover {
+	background-color: #005b8d;
+	transition: .05s ease-in-out;
+}
+
+.nav-links ul li a {
+	color: #fff;
+}
+
+/* ###########################
+Welcome (Index) Page
+########################### */
+
+#index #index-link {
+	text-align: center;
+}
+
+#index #index-link a,
+#index #index-link input[type="submit"] {
+	display: block;
+	font-family: 'Arvo';
+	color: #333;
+	font-weight: 700;
+	font-size: 50px;
+	margin: 40px 0px;
+}
+
+#index #index-link input[type="submit"] {
+	background-color: #fff;
+	border: none;
+}
+
+#index #index-link a:hover,
+#index #index-link input[type="submit"]:hover {
+	color: #005b8d;
+}
+
+#index #index-link input[type="submit"] {
+	margin-top: 210px;
 }
 
 .image-header {

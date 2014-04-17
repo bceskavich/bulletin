@@ -21,9 +21,17 @@ def before_request():
 def load_user(id):
 	return User.query.get(int(id))
 
-@app.route('/', methods = ['GET', 'POST'])
-@app.route('/index', methods = ['GET', 'POST'])
+@app.route('/')
+@app.route('/index')
 def index():
+	if g.user is not None and g.user.is_authenticated():
+		return redirect(url_for('home'))
+	else:
+		return redirect(url_for('login'))
+
+@app.route('/home')
+@login_required
+def home():
 	form = LoadForm()
 	content = {}
 	if g.user is not None and g.user.is_authenticated():
@@ -37,11 +45,12 @@ def index():
 					g.user.save_story(content[item])
 			return redirect(url_for('index'))
 		content = Story.query.filter_by(user_id = g.user.id).all()
-	return render_template('index.html',
+	return render_template('home.html',
 		content = content,
 		form = form)
 
 @app.route('/story/<id>')
+@login_required
 def story(id):
 	story = Story.query.get(int(id))
 	date_saved = datetime.fromtimestamp(story.added)
@@ -62,23 +71,24 @@ def story(id):
 		topics = all_tags,
 		related_stories = related_stories)
 
+### Login Logic ###
+
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
 	# If user is already logged in, simply redirect to index
 	if g.user is not None and g.user.is_authenticated():
-		return redirect(url_for('index'))
-	# Load login form
-	form = LoginForm()
-	if form.validate_on_submit():
-		session['remember_me'] = form.remember_me.data # Session data for remembering user
-		# Grabs request token from Pocket and stores in session for later authentication
-		request_token = Pocket.get_request_token(consumer_key=CONSUMER_KEY, redirect_uri="http://localhost:5000/login")
-		session['request_token'] = request_token
-		# Grabs auth url from Pocket to redirect user to
-		auth_url = Pocket.get_auth_url(code=request_token, redirect_uri="http://localhost:5000" + url_for('auth'))
-		return redirect(auth_url)
-	return render_template('login.html',
-		title = 'Sign In',
+		return redirect(url_for('home'))
+	# Load login if not logged in
+	else:
+		form = LoginForm()
+		if form.validate_on_submit():
+			# Grabs request token from Pocket and stores in session for later authentication
+			request_token = Pocket.get_request_token(consumer_key=CONSUMER_KEY, redirect_uri="http://localhost:5000/login")
+			session['request_token'] = request_token
+			# Grabs auth url from Pocket to redirect user to
+			auth_url = Pocket.get_auth_url(code=request_token, redirect_uri="http://localhost:5000" + url_for('auth'))
+			return redirect(auth_url)
+	return render_template('index.html',
 		form = form)
 
 @app.route('/auth', methods= ['GET', 'POST'])
@@ -102,14 +112,9 @@ def auth():
 		user = User(username = username, token = token, role = ROLE_USER)
 		db.session.add(user)
 		db.session.commit()
-	# Sets remember me via flask login if set that way
-	remember_me = False
-	if 'remember_me' in session:
-		remember_me = session['remember_me']
-		session.pop('remember_me', None)
 	# Logs in user and redirects back to index!
-	login_user(user, remember = remember_me)
-	return redirect(request.args.get('next') or url_for('index'))
+	login_user(user)
+	return redirect(request.args.get('next') or url_for('home'))
 
 @app.route('/logout')
 def logout():

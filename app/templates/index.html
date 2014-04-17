@@ -1,39 +1,45 @@
 {% extends "base.html" %}
-
 {% block content %}
-<div class="row image-header">
-	<a href="{{url_for('login')}}" class="button">Sign in with Pocket</a>
-</div>
-<div class="row">
-	<div class="col-md-12">
-		<h1>Welcome to Bulletin</h1>
-		<p>Bulletin is a webapp to enhance your <a href="http://getpocket.com/" target="_blank">Pocket</a> experience. Use Bulletin to pull related and balanced content from across the web to enhance any of your saved articles.</p>
-		<p>Pocket is currently under development by <a href="http://www.ceskavich.com/" target="_blank">Billy Ceskavich</a>. Check back for more soon. For now, <a href="https://www.github.com/bceskavich/bulletin" target="_blank">view the source code here!</a></p>
-	</div>
-</div>
 
-<hr>
-
-{% if g.user.is_authenticated() %}
-<div class="row">
-	<div class="col-md-12">
-		<form action="" method="post" name="load">
-			{{form.hidden_tag()}}
-			<input type="submit" value="Load Content From Pocket">
-		</form>
-	</div>
-</div>
-{% endif %}
-
-{% if content %}
+<section id="index">
 	<div class="row">
-	{% for story in content %}
-		<div class="col-md-6">
-			<p><strong>Title:</strong> <a href="{{story.url}}">{{story.title}}</a></p>
-			<p>{{story.excerpt}}</p>
-			<p><a href="{{url_for('story', id = story.id)}}">See more!</a></p>
+		<div class="large-3 med-3 small-3 columns">
+			&nbsp;
 		</div>
-	{% endfor %}
+		<div class="large-6 med-6 small-6 columns" id="index-link">
+			<form action="" method="post" name="login">
+				{{form.hidden_tag()}}
+				<input type="submit" value="Sign in with Pocket">
+			</form>
+		</div>
+		<div class="large-3 med-3 small-3 columns">
+			&nbsp;
+		</div>
 	</div>
-{% endif %}
+
+	<div class="row">
+		<div class="large-4 med-4 small-4 columns">
+			&nbsp;
+		</div>
+		<div class="large-4 med-4 small-4 columns">
+			<hr />
+		</div>
+		<div class="large-4 med-4 small-4 columns">
+			&nbsp;
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="large-3 med-3 small-3 columns">
+			&nbsp;
+		</div>
+		<div class="large-6 med-6 small-6 columns" id="index-link">
+			<a href="{{url_for('home')}}">What is Bulletin?</a>
+		</div>
+		<div class="large-3 med-3 small-3 columns">
+			&nbsp;
+		</div>
+	</div>
+</section>
+
 {% endblock %}
