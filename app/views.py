@@ -29,7 +29,7 @@ def index():
 	else:
 		return redirect(url_for('login'))
 
-@app.route('/home')
+@app.route('/home', methods = ['GET', 'POST'])
 @login_required
 def home():
 	form = LoadForm()

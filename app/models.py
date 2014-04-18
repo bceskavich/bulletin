@@ -41,7 +41,14 @@ class User(db.Model):
 			params = {'url':story_url, 'key':key}
 
 			response = requests.get(trove_url, params=params)
-			encoded = json.loads(response.content)
+			"""
+			while True:
+				try:
+					encoded = json.loads(response.content)
+				except ValueError:
+					return False
+			"""
+			encoded = response.json()
 
 			if len(encoded['items']) > 0 and 'relatedChannels' in encoded['items'][0].keys():
 				return True

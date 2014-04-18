@@ -104,25 +104,39 @@ Authenticated Home Page
 }
 
 #home .home-article {
-	background-color: #f9f9f9;
-	border-radius: 5px;
+	/*background-color: #f9f9f9;*/
+	border: 3px #333 solid;
+	border-radius: 2px;
 	padding: 20px 20px;
 	margin: 20px 0px;
 	color: #333;
+	transition: .05s ease-in-out;
 }
 
 #home .home-article h4 {
 	color: #005b8d;
+	transition: .05s ease-in-out;
+}
+
+#home .home-article:hover {
+	border: 3px #005b8d solid;
+	background-color: #005b8d;
+	color: #005b8d;
+	transition: .05s ease-in-out;
+}
+
+#home .home-article:hover h4 {
+	color: #fff;
+	transition: .05s ease-in-out;
 }
 
 #home .story-top {
 	position: absolute;
 	background-color: #005b8d;
-	opacity: .9;
+	opacity: 1;
 	height: 100%;
-	width: 100%;
+	width: 100.1%;
 	display: none;
-	border-radius: 5px;
 	margin-top: -20px;
 	margin-left: -20px;
 	color: #fff;
@@ -137,9 +151,10 @@ Authenticated Home Page
 	font-size: 20px;
 }
 
+/*
 #home .home-article:hover .story-top {
 	display: block;
-}
+}*/
 
 /*
 .image-header {
