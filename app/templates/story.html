@@ -1,7 +1,33 @@
 {% extends "base.html" %}
-
 {% block content %}
+
 {% if story %}
+<section role="main" id="story">
+	<div class="image-header">
+		<div class="row">
+			<div class="small-12 columns">
+				<h1>{{story.title}}</h1>
+				<h4>Saved on {{date_saved.strftime('%B %d, %Y')}} | <a href="{{story.url}}" target="_blank">(Source)</a></h4>
+			</div>
+		</div>
+	</div>
+
+	<div class="row" id="story_info">
+		<section class="large-6 med-6 columns">
+		{% for i in topics %}
+			<span style="font-size: {{i[1]}}em"><a href="https://www.google.com/#q={{i[0]}}" target="_blank">{{ i[0] }}</a>{% if i != topics[-1] %},{% endif %}</span>
+		{% endfor %}
+		</section>
+		<section class="large-6 med-6 columns">
+			<p>{{ story.excerpt }}</p>
+		</section>
+	</div>
+
+	<div class="row">
+		<hr />
+	</div>
+
+	<!--
 	<div class="row">
 		<div class="large-6 medium-6 columns">
 			<p><strong>Title:</strong> <a href="{{story.url}}">{{story.title}}</a></p>
@@ -19,8 +45,8 @@
 			<h3>Context Queries!</h3>
 			{% if topics %}
 				<ul>
-				{% for topic in topics.keys() %}
-					<li>{{topic}} -- {{topics[topic]['frequency']}}</li>
+				{% for i in topics %}
+					<li>{{i[0]}} -- {{i[1]}}</li>
 				</ul>
 				{% endfor %}
 			{% endif %}
@@ -31,6 +57,7 @@
 				{% endfor %}
 			{% endif %}
 		</div>
-	</div>
+	</div>-->
+</section>
 {% endif %}
 {% endblock %}

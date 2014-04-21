@@ -38,7 +38,7 @@ Header Navigation
 }
 
 .contain-to-grid {
-	border-bottom: 1px solid #ddd;
+	border-bottom: 3px solid #005b8d;
 }
 
 /* ###########################
@@ -149,6 +149,48 @@ Authenticated Home Page
 
 #home .story-top p {
 	font-size: 20px;
+}
+
+/* ###########################
+Story Recommendation Page
+########################### */
+
+#story .image-header {
+	background-image: url('../img/pocket_placeholder.png');
+	background-size: cover;
+	background-position: center;
+	height: 250px;
+	width: 100%;
+}
+
+#story .image-header h1 {
+	font-size: 25px;
+	color: #fff;
+	margin-top: 160px;
+}
+
+#story .image-header h4,
+#story .image-header a {
+	font-size: 18px;
+	font-style: italic;
+	color: white;
+}
+
+#story .image-header h4 a:hover {
+	text-decoration: underline;
+}
+
+#story_info {
+	margin-top: 50px;
+}
+
+#story_info > section:first-child {
+	line-height: 1.3;
+}
+
+#story_info > section:nth-child(2) p {
+	font-size: 1.4em;
+	font-family: "Arvo";
 }
 
 /*

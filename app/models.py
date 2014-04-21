@@ -93,8 +93,7 @@ class User(db.Model):
 	        print 'Ah snap, something went wrong!'
 	        channels = None
 	    # Populates channel dictionary based on app-wide convention:
-	    # { [name]: { source: (Trove/NYT), name: (tag/channel name), (frequency:
-	    # int), (id: TroveID), (type: NYT tag type) }
+	    # { [name]: { source: (Trove/NYT), name: (tag/channel name), (frequency: int), (id: TroveID), (type: NYT tag type) }
 	    elif 'relatedChannels' in data.keys():
 	        channels = {}
 	        for item in data['relatedChannels']:
@@ -209,8 +208,20 @@ class User(db.Model):
 	# Simply combines tag dictionaries from Trove ('channels') &
 	# NY Times (sometimes called 'keywords')
 	def combineTopTags(self, common_trove_channels, common_times_tags):
-	    all_common_tags = dict(common_trove_channels.items() + common_times_tags.items())
-	    return all_common_tags
+	    commontags = {}
+	    tags = dict(common_trove_channels.items() + common_times_tags.items())
+
+	    for tag in tags.keys():
+	    	if tags[tag]['frequency'] <= 1:
+	    		del tags[tag]
+	    	else:
+	    		size = (float(tags[tag]['frequency']) * .1) + 1
+	    		commontags[tag] = size
+
+	    tag_tuples = commontags.items()
+	    sortedtags = sorted(tag_tuples, key=lambda tag_tuples: tag_tuples[1], reverse=True)
+
+	    return sortedtags
 
 	def is_authenticated(self):
 		return True

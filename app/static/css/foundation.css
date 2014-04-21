@@ -1224,8 +1224,7 @@ meta.foundation-mq-topbar {
 /* Wrapped around .top-bar to contain to grid width */
 .contain-to-grid {
   width: 100%;
-  background: #fff;
-  border-top: 5px #005b8d solid; }
+  background: #fff; }
   .contain-to-grid .top-bar {
     margin-bottom: 0; }
 
