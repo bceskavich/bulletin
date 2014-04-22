@@ -88,6 +88,27 @@ Index / Login Page
 }
 
 /* ###########################
+About Page
+########################### */
+
+#about h1 {
+	text-align: center;
+	font-weight: 700;
+	margin-top: 50px;
+}
+
+#about h3 {
+	font-weight: 700;
+	text-align: center;
+	margin-top: 4rem;
+	margin-bottom: 5.25rem;
+}
+
+#about p {
+	font-size: 1.5em;
+}
+
+/* ###########################
 Authenticated Home Page
 ########################### */
 
@@ -170,6 +191,8 @@ Authenticated Home Page
 Story Recommendation Page
 ########################### */
 
+/* Story Cover Image */
+
 #story .image-header {
 	background-image: url('../img/pocket_placeholder.png');
 	background-size: cover;
@@ -195,6 +218,8 @@ Story Recommendation Page
 	text-decoration: underline;
 }
 
+/* Story Information */
+
 #story_info {
 	margin-top: 50px;
 }
@@ -209,6 +234,8 @@ Story Recommendation Page
 #story_info > section:first-child {
 	line-height: 1.3;
 }
+
+/* Buttons */
 
 #story_info div:last-child ul,
 #related-content div:last-child ul {
@@ -244,6 +271,8 @@ Story Recommendation Page
 	margin-top: 45px;
 }
 
+/* Related Content List */
+
 #related-content div:first-child h2 {
 	text-align: center;
 }
@@ -275,33 +304,3 @@ Story Recommendation Page
 	color: #005b8d;
 	text-decoration: none;
 }
-
-/*
-#home .home-article:hover .story-top {
-	display: block;
-}*/
-
-/*
-.image-header {
-	background-image:url('../img/pocket_placeholder.png');
-	background-size: cover;
-	background-position: center;
-	height:500px;
-	max-width: none;
-	line-height: 500px;
-}
-
-.image-header a.button {
-	background-color: #c48779;
-	opacity: .9;
-	border: 3px solid #a05d5d;
-	font-family: 'Biko Regular', Avenir, sans-serif;
-	font-size: 30px;
-	border-radius: 10px;
-}
-
-.image-header a.button:hover {
-	background-color: #a05d5d;
-	text-decoration: none;
-}
-*/

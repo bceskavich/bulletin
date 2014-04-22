@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section role="main" id="about">
+	<article class="row">
+		<div class="large-8 med-8 small-8 small-centered columns">
+			<h1>The Bulletin Manifesto</h1>
+			<hr />
+			<p>We have become a culture focused on consumption. The way we ingest written information online is no exception. We peruse every resource, skim the bylines, skip the filler, and often save more items than we care to read later.</p>
+
+			<p>But we can make sense of this deluge. The wide array of information at our fingertips represent a web of connected ideas, stories, and dramas. And for each individual what matters, what is significant, what is attention-worthy differs.</p>
+
+			<h3>- Quality not Quantity -</h3>
+
+			<p>With Bulletin, we try to find that content that matters to you. At its most basic form, Bulletin integrates with your Pocket account, providing you with content related to your saved stories.</p>
+
+			<p>In reality, Bulletin is an extension of our own personal content curations. Bulletin enhances the specific content you want to read. And over time, Bulletin can figure out what is most significant for your needs.</p>
+
+			<p>Bulletin is your personal content curator. <a href="{{url_for('login')}}">Log in now</a> to see today’s bulletins.</p>
+		</div>
+	</article>
+</section>
+
+{% endblock %}
