@@ -8,6 +8,7 @@ from pocket import Pocket
 from datetime import datetime, timedelta
 import json
 import requests
+import os
 
 @app.before_request
 def before_request():
@@ -52,6 +53,10 @@ def home():
 @app.route('/story/<int:id>')
 @login_required
 def story(id):
+	if os.environ.get('HEROKU') is None:
+		url_prefix = 'http://localhost:5000/'
+	else:
+		url_prefix = 'http://bulletin.herokuapp.com/'
 	story = Story.query.get(int(id))
 	date_saved = datetime.fromtimestamp(story.added)
 	channels = g.user.troveChannelSearch(TROVE_KEY, story.url)
@@ -66,6 +71,7 @@ def story(id):
 		flash('This story was not found!')
 		return redirect(url_for('index'))
 	return render_template('story.html',
+		url_prefix = url_prefix,
 		story = story,
 		date_saved = date_saved,
 		topics = all_tags,
@@ -92,13 +98,17 @@ def login():
 		return redirect(url_for('home'))
 	# Load login if not logged in
 	else:
+		if os.environ.get('HEROKU') is None:
+			url_prefix = 'http://localhost:5000/'
+		else:
+			url_prefix = 'http://bulletin.herokuapp.com/'
 		form = LoginForm()
 		if form.validate_on_submit():
 			# Grabs request token from Pocket and stores in session for later authentication
-			request_token = Pocket.get_request_token(consumer_key=CONSUMER_KEY, redirect_uri='http://localhost:5000/auth')
+			request_token = Pocket.get_request_token(consumer_key=CONSUMER_KEY, redirect_uri=url_prefix + 'auth')
 			session['request_token'] = request_token
 			# Grabs auth url from Pocket to redirect user to
-			auth_url = Pocket.get_auth_url(code=request_token, redirect_uri='http://localhost:5000/auth')
+			auth_url = Pocket.get_auth_url(code=request_token, redirect_uri=url_prefix + 'auth')
 			return redirect(auth_url)
 	return render_template('index.html',
 		form = form)

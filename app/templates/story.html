@@ -49,7 +49,7 @@
 			<div class="large-6 med-6 small-6 columns">
 				<ul>
 					<li><a href="{{ related['story_url'] }}" target="_blank">View Online</a></li>
-					<li><a href="http://localhost:5000/save?story_url={{related['story_url']}}&amp;id={{story.id}}" target="_blank">Save to Pocket</a></li>
+					<li><a href="{{url_prefix}}save?story_url={{related['story_url']}}&amp;id={{story.id}}" target="_blank">Save to Pocket</a></li>
 					<li><a href="#">Get Context</a></li>
 				</ul>
 			</div>
