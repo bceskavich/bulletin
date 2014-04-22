@@ -3,14 +3,12 @@ import os
 CSRF_ENABLED = True
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-SECRET_KEY = 'this-should-be-changed'
-
 # Heroku vs. Local Configs
 if os.environ.get('HEROKU') is None:
     # Database path
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
     # CSRF Key
-    SECRET_KEY = 'this-should-be-changed'
+    SECRET_KEY = os.urandom(24)
     # Pocket API
     CONSUMER_KEY = '23571-333bb5dbab872eee6686bf86'
     # News API Credentials
@@ -29,3 +27,4 @@ else:
 
 # Path where we store the migration data files
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
+
