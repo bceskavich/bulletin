@@ -44,12 +44,12 @@ def home():
 				if g.user.is_unique_story(content[item]) and g.user.has_trove_presence(TROVE_KEY, content[item]):
 					g.user.save_story(content[item])
 			return redirect(url_for('index'))
-		content = Story.query.filter_by(user_id = g.user.id).all()
+		content = Story.query.filter_by(user_id = g.user.id).order_by("added DESC").all()
 	return render_template('home.html',
 		content = content,
 		form = form)
 
-@app.route('/story/<id>')
+@app.route('/story/<int:id>')
 @login_required
 def story(id):
 	story = Story.query.get(int(id))
@@ -70,6 +70,18 @@ def story(id):
 		date_saved = date_saved,
 		topics = all_tags,
 		related_stories = related_stories)
+
+@app.route('/save', methods = ['GET', 'POST'])
+@login_required
+def save():
+	url = request.args.get('story_url')
+	prev_id = request.args.get('id')
+	status = g.user.send_to_pocket(CONSUMER_KEY, url)
+	if status == 1:
+		flash('Story successfully saved!')
+	else:
+		flash('Oops, this story could not be saved at this time!')
+	return redirect(url_for('story', id=prev_id))
 
 ### Login Logic ###
 

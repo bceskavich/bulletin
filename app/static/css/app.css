@@ -6,6 +6,11 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: 'Arvo';
 }
 
+a:hover {
+	color: #005b8d;
+	text-decoration: underline;
+}
+
 /* ###########################
 Header Navigation
 ########################### */
@@ -35,6 +40,14 @@ Header Navigation
 
 .nav-links ul li a {
 	color: #fff;
+}
+
+.top-bar ul li a:hover {
+	text-decoration: none;
+}
+
+.top-bar ul li h1 a:hover {
+	color: #005b8d;
 }
 
 .contain-to-grid {
@@ -67,6 +80,7 @@ Index / Login Page
 #index #index-link a:hover,
 #index #index-link input[type="submit"]:hover {
 	color: #005b8d;
+	text-decoration: none;
 }
 
 #index #index-link input[type="submit"] {
@@ -88,11 +102,11 @@ Authenticated Home Page
 #home input[type="submit"] {
 	display: block;
 	font-family: 'Arvo';
-	color: #fff;
+	color: #333;
 	font-weight: 700;
 	font-size: 25px;
-	background-color: #333;
-	border: none;
+	background-color: #fff;
+	border: 2px solid #333;
 	margin: 0px auto;
 	padding: 10px 15px;
 	border-radius: 5px;
@@ -100,7 +114,8 @@ Authenticated Home Page
 }
 
 #home input[type="submit"]:hover {
-	background-color: #005b8d;
+	border: 2px solid #005b8d;
+	color: #005b8d;
 }
 
 #home .home-article {
@@ -184,13 +199,81 @@ Story Recommendation Page
 	margin-top: 50px;
 }
 
+#story_info h2 {
+	text-align: center;
+	padding-bottom: 15px;
+	margin-bottom: 15px;
+	border-bottom: 1px solid #ddd;
+}
+
 #story_info > section:first-child {
 	line-height: 1.3;
 }
 
-#story_info > section:nth-child(2) p {
+#story_info div:last-child ul,
+#related-content div:last-child ul {
+	margin: 0;
+	margin-top: 20px;
+	padding: 0;
+	list-style-type: none;
+	text-align: center;
+}
+
+#story_info div:last-child ul li,
+#related-content div:last-child ul li {
+	display: inline;
+}
+
+#story_info div:last-child ul li a,
+#related-content div:last-child ul li a {
+	border: 2px solid #333;
+	border-radius: 5px;
+	padding: 10px;
+	margin: 10px;
+	color: #333;
+}
+
+#story_info div:last-child ul li a:hover {
+	text-decoration: none;
+	color: #005b8d;
+	border: 2px solid #005b8d;
+}
+
+#story_info div:last-child p {
 	font-size: 1.4em;
-	font-family: "Arvo";
+	margin-top: 45px;
+}
+
+#related-content div:first-child h2 {
+	text-align: center;
+}
+
+#related-content .row {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	transition: .5s;
+}
+
+#related-content div:last-child ul {
+	margin-top: 25px;
+}
+
+#related-content div:last-child ul li a {
+	border: 2px solid #ddd;
+	color: #ddd;
+	transition: .1s;
+}
+
+#related-content .row:hover div:last-child ul li a {
+	border: 2px solid #333;
+	color: #333;
+	transition: .1s;
+}
+
+#related-content .row:hover div:last-child ul li a:hover {
+	border: 2px solid #005b8d;
+	color: #005b8d;
+	text-decoration: none;
 }
 
 /*

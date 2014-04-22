@@ -1285,7 +1285,7 @@ meta.foundation-mq-topbar {
       margin: 0; }
       .top-bar .name h1 a {
         font-weight: 700;
-        color: #005b8d;
+        color: #333;
         width: 75%;
         display: block;
         padding: 0 15px; }

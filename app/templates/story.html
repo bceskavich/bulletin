@@ -3,7 +3,11 @@
 
 {% if story %}
 <section role="main" id="story">
+	{% if story.image_url != None %}
+	<div class="image-header" style="background-image: url({{story.image_url}});">
+	{% else %}
 	<div class="image-header">
+	{% endif %}
 		<div class="row">
 			<div class="small-12 columns">
 				<h1>{{story.title}}</h1>
@@ -12,20 +16,46 @@
 		</div>
 	</div>
 
-	<div class="row" id="story_info">
-		<section class="large-6 med-6 columns">
+	<section class="row" id="story_info">
+		<div class="large-6 med-6 columns">
+			<h2>Related Topics</h2>
 		{% for i in topics %}
 			<span style="font-size: {{i[1]}}em"><a href="https://www.google.com/#q={{i[0]}}" target="_blank">{{ i[0] }}</a>{% if i != topics[-1] %},{% endif %}</span>
 		{% endfor %}
-		</section>
-		<section class="large-6 med-6 columns">
+		</div>
+		<div class="large-6 med-6 columns">
+			<ul>
+				<li><a href="{{story.url}}" target="_blank">View Online</a></li>
+				<li><a href="https://getpocket.com/" target="_blank">View on Pocket</a></li>
+			</ul>
 			<p>{{ story.excerpt }}</p>
-		</section>
-	</div>
+		</div>
+	</section>
 
 	<div class="row">
 		<hr />
 	</div>
+
+	<section id="related-content">
+		<div class="row">
+			<h2>Today's Bulletin</h2>
+		</div>
+		{% for related in related_stories %}
+		<article class="row">
+			<div class="large-6 med-6 small-6 columns">
+				<h5>{{ related['story_title'] }}</h5>
+				<p><em>{{ related['story_source'] }}</em></p>
+			</div>
+			<div class="large-6 med-6 small-6 columns">
+				<ul>
+					<li><a href="{{ related['story_url'] }}" target="_blank">View Online</a></li>
+					<li><a href="http://localhost:5000/save?story_url={{related['story_url']}}&amp;id={{story.id}}" target="_blank">Save to Pocket</a></li>
+					<li><a href="#">Get Context</a></li>
+				</ul>
+			</div>
+		</article>
+		{% endfor %}
+	</section>
 
 	<!--
 	<div class="row">

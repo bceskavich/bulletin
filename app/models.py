@@ -64,6 +64,13 @@ class User(db.Model):
 				title = item['given_title']
 			else:
 				title = item['resolved_title']
+
+			# Sees if there is an image associated with the story
+			if item['has_image'] == 1:
+				image_url = item['images']['1']['src']
+			else:
+				image_url = None
+
 			# Saves story w/ proper content from Pocket request
 			story = Story(
 				user_id = self.id,
@@ -74,7 +81,8 @@ class User(db.Model):
 				wordcount = item['word_count'],
 				added = item['time_added'],
 				status = item['status'],
-				favorite = item['favorite'])
+				favorite = item['favorite'],
+				image_url = image_url)
 			db.session.add(story)
 			db.session.commit()
 
@@ -129,8 +137,8 @@ class User(db.Model):
 	                    'story_url':items[i]['url']
 	                    })
 	            if channel_search:
-	                # Figures out prevalance of channels among the related stories,
-	                # but only if there are related channels present.
+	                # Figures out prevalance of channels among the related
+	                # stories, but only if there are related channels present.
 	                if 'relatedChannels' in items[i].keys():
 	                    for channel in items[i]['relatedChannels']:
 	                        if channel['displayName'] not in common_channels.keys():
@@ -223,6 +231,21 @@ class User(db.Model):
 
 	    return sortedtags
 
+	# Saves external content to user's Pocket account
+	def send_to_pocket(self, key, url):
+		# Requests params
+		params = {
+			'consumer_key': key,
+			'access_token': self.token,
+			'url':url
+		}
+		headers={'content-type':'application/json'}
+		# Initial request & raw data response
+		resp = requests.post('https://getpocket.com/v3/add', data=json.dumps(params), headers=headers)
+		raw = json.loads(resp.content)
+		status = raw['status']
+		return status
+
 	def is_authenticated(self):
 		return True
 
@@ -250,6 +273,7 @@ class Story(db.Model):
 	status = db.Column(db.SmallInteger) #0, 1, 2 - 1 if the item is archived - 2 if the item should be deleted
 	favorite = db.Column(db.SmallInteger) #0 or 1 - 1 If the item is favorited
 	tags = db.Column(db.Text) # JSON object of tags, if had
+	image_url = db.Column(db.String(256)) # populated if Pocket story has image
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 	def __repr__(self):
