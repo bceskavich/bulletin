@@ -1,5 +1,6 @@
 *.pyc
 *.mo
 *.db
+tests.py
 env
 api_tests
